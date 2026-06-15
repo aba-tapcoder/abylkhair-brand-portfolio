@@ -60,7 +60,7 @@ function command(method, params = {}) {
     const timer = setTimeout(() => {
       pending.delete(id);
       reject(new Error(`CDP command timed out: ${method}`));
-    }, 10000);
+    }, 60000);
     pending.set(id, {
       resolve: (value) => {
         clearTimeout(timer);
@@ -121,7 +121,7 @@ async function navigate(url, width, height) {
 }
 
 async function capture(name, { fullPage = false } = {}) {
-  let params = { format: "png", fromSurface: true, captureBeyondViewport: true };
+  let params = { format: "png", fromSurface: true, captureBeyondViewport: fullPage };
   if (fullPage) {
     const metrics = await command("Page.getLayoutMetrics");
     params.clip = {
