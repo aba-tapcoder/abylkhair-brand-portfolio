@@ -1,0 +1,23 @@
+---
+import WhatsAppLink from "./WhatsAppLink.astro";
+import { ui, type Lang } from "@/data/site";
+
+interface Props {
+  lang: Lang;
+  casePage?: boolean;
+}
+
+const { lang, casePage = false } = Astro.props;
+const t = ui[lang];
+---
+
+<section class="footer-cta" id="contact">
+  <div class="section-kicker">{t.ctaEyebrow}</div>
+  <h2>{casePage ? t.caseCtaTitle : t.ctaTitle}</h2>
+  <WhatsAppLink lang={lang} class="button button--light" position={casePage ? "case-footer" : "home-footer"} />
+  <div class="footer-cta__bottom">
+    <p>{t.name}</p>
+    <p>{t.footerNote}</p>
+    <p>© 2026</p>
+  </div>
+</section>

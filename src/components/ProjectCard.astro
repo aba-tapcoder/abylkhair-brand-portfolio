@@ -1,0 +1,35 @@
+---
+import type { Lang, Project } from "@/data/site";
+import { ui } from "@/data/site";
+
+interface Props {
+  project: Project;
+  lang: Lang;
+}
+
+const { project, lang } = Astro.props;
+const t = ui[lang];
+---
+
+<a
+  class={`project-card project-card--${project.number}`}
+  href={`/${lang}/projects/${project.slug}/`}
+  style={`--project-accent:${project.accent};--project-ink:${project.ink}`}
+  data-reveal
+>
+  <div class="project-card__image">
+    <img src={project.cover} alt={project.lead[lang]} loading="lazy" />
+  </div>
+  <div class="project-card__meta">
+    <span>{project.number}</span>
+    <span>{project.category[lang]}</span>
+    <span>{project.year}</span>
+  </div>
+  <div class="project-card__title">
+    <h3>{project.title[lang]}</h3>
+    <p>{project.lead[lang]}</p>
+  </div>
+  <div class="project-card__link">
+    <span>{t.openCase}</span>
+  </div>
+</a>

@@ -1,0 +1,127 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import FooterCTA from "@/components/FooterCTA.astro";
+import { languages, projects, ui, getNextProject, type Lang } from "@/data/site";
+
+export function getStaticPaths() {
+  return languages.flatMap((lang) =>
+    projects.map((project) => ({
+      params: { lang, slug: project.slug },
+      props: { project },
+    })),
+  );
+}
+
+const lang = Astro.params.lang as Lang;
+const { project } = Astro.props;
+const t = ui[lang];
+const next = getNextProject(project.slug);
+const title = `${project.title[lang]} — ${t.name}`;
+---
+
+<BaseLayout lang={lang} title={title} description={project.lead[lang]} image={project.cover}>
+  <div class="case-page" style={`--case-accent:${project.accent};--case-ink:${project.ink}`}>
+    <Header lang={lang} currentPath={Astro.url.pathname} compact />
+
+    <main>
+      <section class="case-hero">
+        <a class="case-back" href={`/${lang}/#projects`}>{t.caseBack}</a>
+        <div class="case-hero__heading">
+          <p class="section-kicker">{project.number} · {project.category[lang]}</p>
+          <h1>{project.title[lang]}</h1>
+          <p>{project.lead[lang]}</p>
+        </div>
+        <div class="case-meta">
+          <div><span>{t.metaClient}</span><strong>{project.client[lang]}</strong></div>
+          <div><span>{t.metaTask}</span><strong>{project.category[lang]}</strong></div>
+          <div><span>{t.metaRole}</span><strong>{project.role[lang]}</strong></div>
+          <div><span>{t.metaAgency}</span><strong>{project.agency[lang]}</strong></div>
+          <div><span>{t.metaResult}</span><strong>{project.result[lang]}</strong></div>
+        </div>
+        <p class="case-credit">{project.credit[lang]}</p>
+        <figure class="case-hero__image">
+          <img src={project.cover} alt={project.lead[lang]} />
+        </figure>
+      </section>
+
+      <section class="case-section case-context">
+        <div class="case-section__heading" data-reveal>
+          <span>01</span>
+          <h2>{t.caseContext}</h2>
+        </div>
+        <div class="case-context__content">
+          <p data-reveal>{project.context[lang]}</p>
+          <blockquote data-reveal>{project.challenge[lang]}</blockquote>
+        </div>
+      </section>
+
+      <section class="case-section case-research">
+        <div class="case-section__heading" data-reveal>
+          <span>02</span>
+          <h2>{project.researchHeading?.[lang] ?? t.caseResearch}</h2>
+        </div>
+        <div class="case-four-k">
+          {(["company", "competitors", "clients", "culture"] as const).map((key, index) => (
+            <article data-reveal>
+              <span>0{index + 1}</span>
+              <h3>{t.methodItems[index].title}</h3>
+              <p>{project.research[key][lang]}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="case-section case-strategy">
+        <div class="case-section__heading" data-reveal>
+          <span>03</span>
+          <h2>{project.strategyHeading?.[lang] ?? t.caseStrategy}</h2>
+        </div>
+        <div class="strategy-statement" data-reveal>
+          <p>{project.strategyLabel[lang]}</p>
+          <blockquote>{project.strategy[lang]}</blockquote>
+        </div>
+      </section>
+
+      <section class="case-section case-identity">
+        <div class="case-section__heading" data-reveal>
+          <span>04</span>
+          <h2>{t.caseIdentity}</h2>
+        </div>
+        <p class="case-identity__intro" data-reveal>{project.identity[lang]}</p>
+        <div class="case-gallery">
+          {project.images.map((image, index) => (
+            <figure class:list={["case-gallery__item", image.shape && `case-gallery__item--${image.shape}`]} data-reveal>
+              <img src={image.src} alt={image.alt[lang]} loading={index < 2 ? "eager" : "lazy"} />
+              <figcaption>{String(index + 1).padStart(2, "0")}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section class="case-section case-change">
+        <div class="case-section__heading" data-reveal>
+          <span>05</span>
+          <h2>{t.caseChange}</h2>
+        </div>
+        <div class="change-grid">
+          <article data-reveal>
+            <span>{t.caseBefore}</span>
+            <p>{project.changeBefore[lang]}</p>
+          </article>
+          <article data-reveal>
+            <span>{t.caseAfter}</span>
+            <p>{project.changeAfter[lang]}</p>
+          </article>
+        </div>
+      </section>
+
+      <a class="next-project" href={`/${lang}/projects/${next.slug}/`}>
+        <span>{t.nextProject}</span>
+        <strong>{next.title[lang]}</strong>
+      </a>
+
+      <FooterCTA lang={lang} casePage />
+    </main>
+  </div>
+</BaseLayout>

@@ -1,0 +1,133 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Header from "@/components/Header.astro";
+import ProjectCard from "@/components/ProjectCard.astro";
+import WhatsAppLink from "@/components/WhatsAppLink.astro";
+import FooterCTA from "@/components/FooterCTA.astro";
+import { languages, projects, ui, type Lang } from "@/data/site";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = ui[lang];
+const title = `${t.name} — ${t.profession}`;
+---
+
+<BaseLayout lang={lang} title={title} description={t.heroText}>
+  <Header lang={lang} currentPath={Astro.url.pathname} />
+
+  <main>
+    <section class="home-hero">
+      <div class="home-hero__content">
+        <p class="section-kicker">{t.heroEyebrow}</p>
+        <h1>{t.heroTitle}</h1>
+        <p class="home-hero__lead">{t.heroText}</p>
+        <WhatsAppLink lang={lang} label={t.heroCta} class="button button--dark" position="hero" />
+      </div>
+      <figure class="home-hero__portrait">
+        <img src="/images/portrait.jpg" alt={`${t.name}, ${t.profession}`} />
+      </figure>
+      <div class="home-hero__facts" aria-label="Project facts">
+        {t.facts.map((fact, index) => <div><span>0{index + 1}</span>{fact}</div>)}
+      </div>
+    </section>
+
+    <section class="projects-section page-section" id="projects">
+      <div class="section-heading" data-reveal>
+        <span class="section-number">01</span>
+        <div>
+          <h2>{t.selectedProjects}</h2>
+          <p>{t.selectedIntro}</p>
+        </div>
+      </div>
+      <div class="projects-grid">
+        {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+      </div>
+    </section>
+
+    <section class="method-section page-section" id="system">
+      <div class="section-heading" data-reveal>
+        <span class="section-number">02</span>
+        <div>
+          <p class="section-kicker">{t.methodEyebrow}</p>
+          <h2>{t.methodTitle}</h2>
+          <p>{t.methodIntro}</p>
+        </div>
+      </div>
+      <div class="method-grid">
+        {t.methodItems.map((item, index) => (
+          <article data-reveal style={`--delay:${index * 70}ms`}>
+            <span>0{index + 1}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="method-outcome" data-reveal>{t.methodOutcome}</p>
+    </section>
+
+    <section class="system-section page-section">
+      <div class="section-heading" data-reveal>
+        <span class="section-number">03</span>
+        <div>
+          <p class="section-kicker">{t.systemEyebrow}</p>
+          <h2>{t.systemTitle}</h2>
+          <p>{t.systemIntro}</p>
+        </div>
+      </div>
+      <div class="deliverables">
+        {t.deliverables.map((item, index) => (
+          <div data-reveal>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <p>{item}</p>
+          </div>
+        ))}
+      </div>
+      <details class="bonuses" data-reveal>
+        <summary>{t.bonusesTitle}</summary>
+        <ul>{t.bonuses.map((bonus) => <li>{bonus}</li>)}</ul>
+      </details>
+      <WhatsAppLink lang={lang} class="button button--outline system-cta" position="system" />
+    </section>
+
+    <section class="guarantees-section page-section">
+      <div class="section-heading" data-reveal>
+        <span class="section-number">04</span>
+        <div>
+          <p class="section-kicker">{t.guaranteesEyebrow}</p>
+          <h2>{t.guaranteesTitle}</h2>
+        </div>
+      </div>
+      <div class="guarantee-grid">
+        <article data-reveal>
+          <span>01</span>
+          <h3>{t.guaranteeOneTitle}</h3>
+          <p>{t.guaranteeOne}</p>
+        </article>
+        <article data-reveal>
+          <span>02</span>
+          <h3>{t.guaranteeTwoTitle}</h3>
+          <p>{t.guaranteeTwo}</p>
+        </article>
+      </div>
+      <p class="guarantee-note">{t.guaranteeNote}</p>
+    </section>
+
+    <section class="about-section page-section" id="about">
+      <figure data-reveal>
+        <img src="/images/portrait.jpg" alt={`${t.name}, ${t.profession}`} loading="lazy" />
+      </figure>
+      <div class="about-section__copy" data-reveal>
+        <span class="section-number">05</span>
+        <p class="section-kicker">{t.aboutEyebrow}</p>
+        <h2>{t.aboutTitle}</h2>
+        <p>{t.aboutText}</p>
+        <p>{t.aboutTextTwo}</p>
+      </div>
+    </section>
+
+    <FooterCTA lang={lang} />
+  </main>
+</BaseLayout>

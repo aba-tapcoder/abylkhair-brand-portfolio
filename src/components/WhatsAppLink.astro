@@ -1,0 +1,23 @@
+---
+import { getWhatsAppUrl, ui, type Lang } from "@/data/site";
+
+interface Props {
+  lang: Lang;
+  label?: string;
+  class?: string;
+  position?: string;
+}
+
+const { lang, label = ui[lang].ctaButton, class: className = "", position = "unknown" } = Astro.props;
+---
+
+<a
+  class:list={["whatsapp-link", className]}
+  href={getWhatsAppUrl(lang)}
+  target="_blank"
+  rel="noreferrer"
+  aria-label={`${label} — WhatsApp`}
+  data-cta-position={position}
+>
+  <span>{label}</span>
+</a>
