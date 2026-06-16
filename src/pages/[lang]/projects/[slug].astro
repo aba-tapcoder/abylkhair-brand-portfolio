@@ -18,9 +18,10 @@ const { project } = Astro.props;
 const t = ui[lang];
 const next = getNextProject(project.slug);
 const title = `${project.title[lang]} — ${t.name}`;
+const showImages = project.showImages !== false;
 ---
 
-<BaseLayout lang={lang} title={title} description={project.lead[lang]} image={project.cover}>
+<BaseLayout lang={lang} title={title} description={project.lead[lang]} image={showImages ? project.cover : undefined}>
   <div class="case-page" style={`--case-accent:${project.accent};--case-ink:${project.ink}`}>
     <Header lang={lang} currentPath={Astro.url.pathname} compact />
 
@@ -40,9 +41,11 @@ const title = `${project.title[lang]} — ${t.name}`;
           <div><span>{t.metaResult}</span><strong>{project.result[lang]}</strong></div>
         </div>
         <p class="case-credit">{project.credit[lang]}</p>
-        <figure class="case-hero__image">
-          <img src={project.cover} alt={project.lead[lang]} />
-        </figure>
+        {showImages && (
+          <figure class="case-hero__image">
+            <img src={project.cover} alt={project.lead[lang]} />
+          </figure>
+        )}
       </section>
 
       <section class="case-section case-context">
@@ -89,14 +92,16 @@ const title = `${project.title[lang]} — ${t.name}`;
           <h2>{t.caseIdentity}</h2>
         </div>
         <p class="case-identity__intro" data-reveal>{project.identity[lang]}</p>
-        <div class="case-gallery">
-          {project.images.map((image, index) => (
-            <figure class:list={["case-gallery__item", image.shape && `case-gallery__item--${image.shape}`]} data-reveal>
-              <img src={image.src} alt={image.alt[lang]} loading={index < 2 ? "eager" : "lazy"} />
-              <figcaption>{String(index + 1).padStart(2, "0")}</figcaption>
-            </figure>
-          ))}
-        </div>
+        {showImages && project.images.length > 0 && (
+          <div class="case-gallery">
+            {project.images.map((image, index) => (
+              <figure class:list={["case-gallery__item", image.shape && `case-gallery__item--${image.shape}`]} data-reveal>
+                <img src={image.src} alt={image.alt[lang]} loading={index < 2 ? "eager" : "lazy"} />
+                <figcaption>{String(index + 1).padStart(2, "0")}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
       </section>
 
       <section class="case-section case-change">

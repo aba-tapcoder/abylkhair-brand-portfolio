@@ -9,7 +9,7 @@ interface Props {
   image?: string;
 }
 
-const { lang, title, description, image = "/images/dala/hero.jpg" } = Astro.props;
+const { lang, title, description, image } = Astro.props;
 const canonical = Astro.url.href;
 const alternateLang = lang === "ru" ? "kz" : "ru";
 const alternateUrl = new URL(Astro.url.pathname.replace(`/${lang}/`, `/${alternateLang}/`), Astro.url);
@@ -25,7 +25,7 @@ const alternateUrl = new URL(Astro.url.pathname.replace(`/${lang}/`, `/${alterna
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
+    {image && <meta property="og:image" content={new URL(image, Astro.url)} />}
     <meta property="og:locale" content={lang === "ru" ? "ru_KZ" : "kk_KZ"} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang={lang === "ru" ? "ru-KZ" : "kk-KZ"} href={canonical} />

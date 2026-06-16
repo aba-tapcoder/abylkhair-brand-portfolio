@@ -11,6 +11,7 @@ export type Project = {
   accent: string;
   ink: string;
   cover: string;
+  showImages?: boolean;
   title: Localized;
   category: Localized;
   lead: Localized;
@@ -457,6 +458,7 @@ export const projects: Project[] = [
     accent: "#596da8",
     ink: "#07152c",
     cover: "/images/star/hero.jpg",
+    showImages: false,
     title: { ru: "Star Talk", kz: "Star Talk" },
     category: { ru: "Исследование и бренд-платформа", kz: "Зерттеу және бренд платформасы" },
     lead: {
@@ -514,15 +516,7 @@ export const projects: Project[] = [
       ru: "Ясная школа коммуникаций с логичной архитектурой и ролью для каждого направления.",
       kz: "Логикалық архитектурасы және әр бағыттың рөлі бар айқын коммуникация мектебі.",
     },
-    images: [
-      { src: "/images/star/class.jpg", alt: { ru: "Занятие в Star Talk", kz: "Star Talk сабағы" }, shape: "wide" },
-      { src: "/images/star/conclusions.jpg", alt: { ru: "Выводы исследования Star Talk", kz: "Star Talk зерттеу қорытындылары" }, shape: "wide" },
-      { src: "/images/star/architecture.jpg", alt: { ru: "Архитектура Talk Business и Talk Public", kz: "Talk Business және Talk Public архитектурасы" }, shape: "wide" },
-      { src: "/images/star/essence.jpg", alt: { ru: "Суть бренда Star Talk", kz: "Star Talk брендінің мәні" }, shape: "wide" },
-      { src: "/images/star/prism.jpg", alt: { ru: "Призма бренда Star Talk", kz: "Star Talk бренд призмасы" }, shape: "wide" },
-      { src: "/images/star/public-reference.jpg", alt: { ru: "Визуальное направление Talk Public", kz: "Talk Public визуалды бағыты" }, shape: "wide" },
-      { src: "/images/star/business-reference.jpg", alt: { ru: "Визуальное направление Talk Business", kz: "Talk Business визуалды бағыты" }, shape: "wide" },
-    ],
+    images: [],
   },
 ];
 

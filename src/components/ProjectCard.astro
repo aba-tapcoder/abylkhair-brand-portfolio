@@ -9,6 +9,7 @@ interface Props {
 
 const { project, lang } = Astro.props;
 const t = ui[lang];
+const showImages = project.showImages !== false;
 ---
 
 <a
@@ -17,8 +18,12 @@ const t = ui[lang];
   style={`--project-accent:${project.accent};--project-ink:${project.ink}`}
   data-reveal
 >
-  <div class="project-card__image">
-    <img src={project.cover} alt={project.lead[lang]} loading="lazy" />
+  <div class:list={["project-card__image", !showImages && "project-card__image--type"]}>
+    {showImages ? (
+      <img src={project.cover} alt={project.lead[lang]} loading="lazy" />
+    ) : (
+      <span aria-hidden="true">{project.title[lang]}</span>
+    )}
   </div>
   <div class="project-card__meta">
     <span>{project.number}</span>
