@@ -14,6 +14,7 @@ await mkdir(outputDir, { recursive: true });
 const processRef = spawn(chrome, [
   "--headless=new",
   "--disable-gpu",
+  "--disable-extensions",
   "--hide-scrollbars",
   "--no-first-run",
   "--no-default-browser-check",
@@ -34,7 +35,9 @@ async function pollJson(url) {
 }
 
 const pages = await pollJson(`http://127.0.0.1:${port}/json/list`);
-const socketUrl = pages[0].webSocketDebuggerUrl;
+const page = pages.find((entry) => entry.type === "page" && !entry.url.startsWith("chrome-extension://"));
+if (!page) throw new Error("No inspectable page target");
+const socketUrl = page.webSocketDebuggerUrl;
 const socket = new WebSocket(socketUrl);
 await new Promise((resolve, reject) => {
   socket.addEventListener("open", resolve, { once: true });
@@ -104,7 +107,15 @@ async function waitForReady() {
       new Promise((resolve) => setTimeout(resolve, 4000))
     ]).then(() => true)
   `);
-  await evaluate("document.querySelectorAll('[data-reveal]').forEach((node) => node.classList.add('is-visible')); true");
+  await evaluate(`
+    (() => {
+      const style = document.createElement('style');
+      style.textContent = '* { transition: none !important; } [data-reveal] { opacity: 1 !important; transform: none !important; }';
+      document.head.appendChild(style);
+      document.querySelectorAll('[data-reveal]').forEach((node) => node.classList.add('is-visible'));
+      return true;
+    })()
+  `);
 }
 
 async function navigate(url, width, height) {

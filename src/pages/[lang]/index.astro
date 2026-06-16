@@ -24,7 +24,7 @@ const title = `${t.name} — ${t.profession}`;
         <p class="section-kicker">{t.heroEyebrow}</p>
         <h1>{t.heroTitle}</h1>
         <p class="home-hero__lead">{t.heroText}</p>
-        <WhatsAppLink lang={lang} label={t.heroCta} class="button button--dark" position="hero" />
+        <WhatsAppLink lang={lang} label={t.heroCta} class="button button--dark" position="hero" message="diagnosis" />
       </div>
       <figure class="home-hero__portrait">
         <img src="/images/portrait.jpg" alt={`${t.name}, ${t.profession}`} />
@@ -34,20 +34,34 @@ const title = `${t.name} — ${t.profession}`;
       </div>
     </section>
 
-    <section class="projects-section page-section" id="projects">
+    <section class="diagnosis-section page-section" id="system">
       <div class="section-heading" data-reveal>
         <span class="section-number">01</span>
         <div>
-          <h2>{t.selectedProjects}</h2>
-          <p>{t.selectedIntro}</p>
+          <p class="section-kicker">{t.diagnosisEyebrow}</p>
+          <h2>{t.diagnosisTitle}</h2>
+          <p>{t.diagnosisIntro}</p>
         </div>
       </div>
-      <div class="projects-grid">
-        {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+      <div class="diagnosis-grid">
+        {t.diagnosisItems.map((item, index) => (
+          <article data-reveal style={`--delay:${index * 60}ms`}>
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            <p>{item}</p>
+          </article>
+        ))}
       </div>
+      <p class="diagnosis-note" data-reveal>{t.diagnosisNote}</p>
+      <WhatsAppLink
+        lang={lang}
+        label={t.diagnosisCta}
+        class="button button--dark diagnosis-cta"
+        position="diagnosis"
+        message="diagnosis"
+      />
     </section>
 
-    <section class="method-section page-section" id="system">
+    <section class="method-section page-section">
       <div class="section-heading" data-reveal>
         <span class="section-number">02</span>
         <div>
@@ -68,51 +82,17 @@ const title = `${t.name} — ${t.profession}`;
       <p class="method-outcome" data-reveal>{t.methodOutcome}</p>
     </section>
 
-    <section class="system-section page-section">
+    <section class="projects-section page-section" id="projects">
       <div class="section-heading" data-reveal>
         <span class="section-number">03</span>
         <div>
-          <p class="section-kicker">{t.systemEyebrow}</p>
-          <h2>{t.systemTitle}</h2>
-          <p>{t.systemIntro}</p>
+          <h2>{t.selectedProjects}</h2>
+          <p>{t.selectedIntro}</p>
         </div>
       </div>
-      <div class="deliverables">
-        {t.deliverables.map((item, index) => (
-          <div data-reveal>
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <p>{item}</p>
-          </div>
-        ))}
+      <div class="projects-grid">
+        {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
       </div>
-      <details class="bonuses" data-reveal>
-        <summary>{t.bonusesTitle}</summary>
-        <ul>{t.bonuses.map((bonus) => <li>{bonus}</li>)}</ul>
-      </details>
-      <WhatsAppLink lang={lang} class="button button--outline system-cta" position="system" />
-    </section>
-
-    <section class="guarantees-section page-section">
-      <div class="section-heading" data-reveal>
-        <span class="section-number">04</span>
-        <div>
-          <p class="section-kicker">{t.guaranteesEyebrow}</p>
-          <h2>{t.guaranteesTitle}</h2>
-        </div>
-      </div>
-      <div class="guarantee-grid">
-        <article data-reveal>
-          <span>01</span>
-          <h3>{t.guaranteeOneTitle}</h3>
-          <p>{t.guaranteeOne}</p>
-        </article>
-        <article data-reveal>
-          <span>02</span>
-          <h3>{t.guaranteeTwoTitle}</h3>
-          <p>{t.guaranteeTwo}</p>
-        </article>
-      </div>
-      <p class="guarantee-note">{t.guaranteeNote}</p>
     </section>
 
     <section class="about-section page-section" id="about">
@@ -120,7 +100,7 @@ const title = `${t.name} — ${t.profession}`;
         <img src="/images/portrait.jpg" alt={`${t.name}, ${t.profession}`} loading="lazy" />
       </figure>
       <div class="about-section__copy" data-reveal>
-        <span class="section-number">05</span>
+        <span class="section-number">04</span>
         <p class="section-kicker">{t.aboutEyebrow}</p>
         <h2>{t.aboutTitle}</h2>
         <p>{t.aboutText}</p>

@@ -475,6 +475,52 @@ h2 {
   line-height: 1.08;
 }
 
+.diagnosis-section {
+  background: var(--paper-deep);
+}
+
+.diagnosis-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.diagnosis-grid article {
+  min-height: 18rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2.5rem;
+  padding: 1.35rem;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.diagnosis-grid span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.diagnosis-grid p {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.45rem, 2.45vw, 2.75rem);
+  line-height: 1.04;
+}
+
+.diagnosis-note {
+  max-width: 45rem;
+  margin: 2rem 0 0 auto;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.diagnosis-cta {
+  margin-top: 2.3rem;
+}
+
 .deliverables {
   border-top: 1px solid var(--line);
 }
@@ -1087,8 +1133,9 @@ h2 {
 
   .home-hero h1 {
     max-width: 100%;
-    font-size: clamp(3.25rem, 14.2vw, 4.6rem);
-    overflow-wrap: anywhere;
+    font-size: clamp(2.75rem, 11vw, 3.45rem);
+    overflow-wrap: break-word;
+    hyphens: manual;
   }
 
   .home-hero__portrait {
@@ -1123,7 +1170,14 @@ h2 {
 
   .section-heading h2,
   .case-section__heading h2 {
-    font-size: clamp(3.15rem, 15vw, 5rem);
+    max-width: 100%;
+    font-size: clamp(2.65rem, 10.5vw, 3.6rem);
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+
+  .case-section__heading h2 {
+    font-size: clamp(2.55rem, 10.5vw, 3.45rem);
   }
 
   .projects-grid {
@@ -1148,9 +1202,14 @@ h2 {
     grid-template-columns: 2rem 1fr auto;
   }
 
+  .diagnosis-grid,
   .method-grid,
   .case-four-k {
     grid-template-columns: 1fr;
+  }
+
+  .diagnosis-grid article {
+    min-height: 12rem;
   }
 
   .method-grid article,
@@ -1182,7 +1241,9 @@ h2 {
   }
 
   .footer-cta h2 {
-    font-size: clamp(3.3rem, 16vw, 5rem);
+    font-size: clamp(2.7rem, 11vw, 3.75rem);
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .footer-cta__bottom {
@@ -1203,8 +1264,11 @@ h2 {
   }
 
   .case-hero h1 {
-    font-size: clamp(4.3rem, 22vw, 7rem);
+    max-width: 100%;
+    font-size: clamp(3.1rem, 16vw, 4.4rem);
     line-height: 0.82;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .case-meta {
@@ -1225,10 +1289,14 @@ h2 {
 
   .case-context blockquote {
     font-size: 2.35rem;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .strategy-statement blockquote {
-    font-size: clamp(2.8rem, 13vw, 4.8rem);
+    font-size: clamp(2.1rem, 9vw, 3.25rem);
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   .case-gallery {

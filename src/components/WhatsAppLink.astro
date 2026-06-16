@@ -1,19 +1,26 @@
 ---
-import { getWhatsAppUrl, ui, type Lang } from "@/data/site";
+import { getWhatsAppUrl, ui, type Lang, type WhatsAppIntent } from "@/data/site";
 
 interface Props {
   lang: Lang;
   label?: string;
   class?: string;
   position?: string;
+  message?: WhatsAppIntent;
 }
 
-const { lang, label = ui[lang].ctaButton, class: className = "", position = "unknown" } = Astro.props;
+const {
+  lang,
+  label = ui[lang].ctaButton,
+  class: className = "",
+  position = "unknown",
+  message = "general",
+} = Astro.props;
 ---
 
 <a
   class:list={["whatsapp-link", className]}
-  href={getWhatsAppUrl(lang)}
+  href={getWhatsAppUrl(lang, message)}
   target="_blank"
   rel="noreferrer"
   aria-label={`${label} — WhatsApp`}
